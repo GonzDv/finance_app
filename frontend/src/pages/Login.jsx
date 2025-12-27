@@ -1,92 +1,84 @@
 import { useState, useContext } from 'react';
 import { AuthContext } from '@/context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import Bottom from '@/components/Btn';
+import Input from '@/components/Input';
 
 const Login = () => {
-	const [email, setEmail] = useState('');
-	const [password, setPassword] = useState('');
+	const [formData, setFormData] = useState({
+		email: '',
+		password: '',
+	});
+
 	const { login } = useContext(AuthContext);
 	const navigate = useNavigate();
+
+	const manejarCambio = (e) => {
+		const { name, value } = e.target;
+		setFormData({
+			...formData,
+			[name]: value,
+		});
+	};
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		try {
-			await login(email, password);
+			await login(formData.email, formData.password);
 			navigate('/dashboard');
 		} catch (error) {
-			alert(error || 'Error al iniciar sesión');
+			alert(error.response?.data?.message || 'Error al iniciar sesión');
 		}
 	};
 
 	return (
-		<div className='min-h-screen flex flex-col md:items-center md:justify-center bg-black'>
-			{/* En móvil: sin bordes ni rounded. En escritorio: con bordes, shadow y max-width */}
-			<div className='w-full h-full min-h-fit md:min-h-screen md:max-w-md p-6 md:p-8 bg-white md:rounded-2xl md:border md:border-gray-200 md:shadow-xl'>
+		<div className='min-h-screen flex flex-col md:justify-center md:items-center bg-[#171f2b]'>
+			<div className='w-full h-full md:min-h-fit min-h-screen md:max-w-md p-6 md:p-8 rounded-2xl text-white md:shadow-xl bg-[#171f2b]/10 backdrop-blur-sm'>
 				<div className='mt-12 md:mt-0'>
-					<h2 className='text-3xl font-extrabold mb-2 text-gray-900'>
+					<h2 className='text-3xl font-extrabold mb-2 text-white'>
 						Bienvenido
 					</h2>
-					<p className='text-gray-500 mb-8'>
+					<p className='mb-8 text-gray-300'>
 						Inicia sesión para continuar
 					</p>
 				</div>
 
 				<form onSubmit={handleSubmit} className='space-y-6'>
-					<div>
-						<label className='block text-sm font-semibold text-gray-700'>
-							Email
-						</label>
-						<input
-							type='email'
-							placeholder='tu@correo.com'
-							className='w-full p-3 mt-1 bg-gray-50 border border-gray-300 rounded-xl focus:ring-2 focus:ring-black focus:border-transparent outline-none transition-all'
-							value={email}
-							onChange={(e) =>
-								setEmail(e.target.value)
-							}
-							required
-						/>
-					</div>
 
-					<div>
-						<div className='flex justify-between items-center'>
-							<label className='block text-sm font-semibold text-gray-700'>
+					<Input
+						label="Email"
+						name="email"
+						type="email"
+						placeholder="tu@correo.com"
+						value={formData.email}
+						onChange={manejarCambio}
+					/>
+
+					<div className="relative">
+						<div className='flex justify-between items-center mb-1'>
+							<label className='block text-sm font-semibold text-white'>
 								Contraseña
 							</label>
-							<a
-								className='text-xs font-bold text-blue-600 hover:text-blue-800'
-								href='#'
-							>
+							<a className='text-xs font-bold text-gray-400 hover:text-gray-200 hover:underline' href='#'>
 								¿La olvidaste?
 							</a>
 						</div>
-						<input
-							type='password'
-							placeholder='••••••••'
-							className='w-full p-3 mt-1 bg-gray-50 border border-gray-300 rounded-xl focus:ring-2 focus:ring-black focus:border-transparent outline-none transition-all'
-							value={password}
-							onChange={(e) =>
-								setPassword(e.target.value)
-							}
-							required
+						<Input
+							name="password"
+							type="password"
+							placeholder="••••••••"
+							value={formData.password}
+							onChange={manejarCambio}
 						/>
 					</div>
 
 					<div className='pt-2'>
-						<button
-							type='submit'
-							className='w-full bg-black text-white py-4 rounded-xl font-bold hover:bg-gray-800 active:scale-[0.98] transition-all shadow-lg shadow-gray-200'
-						>
-							Entrar
-						</button>
+						<Bottom type='submit'>Iniciar Sesión</Bottom>
 					</div>
 
-					<p className='text-center text-sm text-gray-600'>
+					<p className='text-center text-sm text-white'>
 						¿No tienes una cuenta?{' '}
-						<a
-							className='font-bold text-blue-600 hover:underline'
-							href='/register'
-						>
+						<a className='font-bold text-[#3cb566] hover:text-[#2a7a3e] hover:underline' href='/register'>
 							Regístrate
 						</a>
 					</p>

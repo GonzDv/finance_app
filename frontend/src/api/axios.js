@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: 'http://localhost:5000/api', // Tu servidor de Node
+    baseURL: 'http://localhost:5000/api',
 });
 
 // Este interceptor pegará el Token automáticamente en cada petición
