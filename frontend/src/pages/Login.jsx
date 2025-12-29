@@ -32,10 +32,10 @@ const Login = () => {
 	};
 
 	return (
-		<div className='min-h-screen flex flex-col md:justify-center md:items-center bg-[#171f2b]'>
-			<div className='w-full h-full md:min-h-fit min-h-screen md:max-w-md p-6 md:p-8 rounded-2xl text-white md:shadow-xl bg-[#171f2b]/10 backdrop-blur-sm'>
+		<div className='min-h-screen flex flex-col md:justify-center md:items-center bg-[#171f2b] text-white'>
+			<div className='w-full h-full md:min-h-fit min-h-screen md:max-w-md p-6 md:p-8 rounded-2xl md:shadow-xl bg-[#171f2b]/10 backdrop-blur-sm'>
 				<div className='mt-12 md:mt-0'>
-					<h2 className='text-3xl font-extrabold mb-2 text-white'>
+					<h2 className='text-3xl font-extrabold mb-2 '>
 						Bienvenido
 					</h2>
 					<p className='mb-8 text-gray-300'>
@@ -56,7 +56,7 @@ const Login = () => {
 
 					<div className="relative">
 						<div className='flex justify-between items-center mb-1'>
-							<label className='block text-sm font-semibold text-white'>
+							<label className='block text-sm font-semibold'>
 								Contraseña
 							</label>
 							<a className='text-xs font-bold text-gray-400 hover:text-gray-200 hover:underline' href='#'>
@@ -76,7 +76,7 @@ const Login = () => {
 						<Bottom type='submit'>Iniciar Sesión</Bottom>
 					</div>
 
-					<p className='text-center text-sm text-white'>
+					<p className='text-center text-sm'>
 						¿No tienes una cuenta?{' '}
 						<a className='font-bold text-[#3cb566] hover:text-[#2a7a3e] hover:underline' href='/register'>
 							Regístrate

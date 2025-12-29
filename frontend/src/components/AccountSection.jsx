@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import api from '@/api/axios';
-import { CreditCard } from 'lucide-react';
+import { CreditCard, Plus } from 'lucide-react';
+import { Link } from 'react-router-dom';
 const AccountSection = () => {
     const [accounts, setAccounts] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -24,7 +25,7 @@ const AccountSection = () => {
     }
     return (
         <section>
-            <div className="flex overflow-x-auto gap-4 no-scrollbar pb-2">
+            <div className="flex overflow-x-auto gap-4 no-scrollbar pb-2 mi_password_seguro">
                 {accounts.map((account) => (
                     <div
                         key={account._id}
@@ -38,19 +39,20 @@ const AccountSection = () => {
                                 </p>
                             </div>
                             <div className='flex gap-2 items-end'>
-                            <p className='text-sm'>Balance:</p>
-                            <p className="text-md font-bold mt-1">
-                                ${account.balance.toLocaleString('es-MX', { minimumFractionDigits: 2 })}
-                            </p>
+                                <p className='text-sm'>Balance:</p>
+                                <p className="text-md font-bold mt-1">
+                                    ${account.balance.toLocaleString('es-MX', { minimumFractionDigits: 2 })}
+                                </p>
                             </div>
                         </div>
-                        
+
                     </div>
                 ))}
-
-                <button className="min-w-[140px] border-2 border-dashed border-gray-800 rounded-xl flex items-center justify-center text-gray-600 hover:text-gray-400 hover:border-gray-600 transition-colors">
-                    <span className="text-2xl">+</span>
-                </button>
+                <Link 
+                    to="/new-account"
+                    className="min-w-35 border-2 border-dashed border-gray-800 rounded-xl p-2 flex items-center justify-center text-gray-600 hover:text-gray-400 hover:border-gray-600 transition-colors group">
+                    <Plus size={20} strokeWidth={3} />
+                </Link>
             </div>
         </section>
     )

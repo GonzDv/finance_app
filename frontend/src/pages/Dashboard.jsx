@@ -4,6 +4,7 @@ import SummaryCard from '@/components/SummaryCard';
 import BudgetList from '@/components/BudgetList';
 import BottomNav from '@/components/BottomNav';
 import { useState } from 'react';
+import CreateMovement from '../components/CreateMovement';
 const Dashboard = () => {
 	const [accounts, setAccounts] = useState([]);
 	return (
@@ -16,6 +17,7 @@ const Dashboard = () => {
 				/>
 				<SummaryCard accounts={accounts} />
 
+				<CreateMovement />
 				<BudgetList />
 			</div>
 			<BottomNav />

@@ -3,6 +3,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import ProtectedRoute from './components/ProtectedRoute';
+import NewAccount from './pages/NewAccount';
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
         {/* Ruta Pública */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/new-account" element={<NewAccount />} />
 
         {/* Ruta Protegida: El Dashboard */}
         <Route 

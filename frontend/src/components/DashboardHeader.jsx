@@ -12,17 +12,13 @@ const DashboardHeader = () => {
     <header className="flex justify-between items-center mb-8 w-full max-w-4xl mx-auto text-white px-4 md:px-0">
       <div>
         <h1 className="text-xl md:text-2xl font-bold tracking-tight">
-          Hola,{' '}
+          Hola,{' '} 
           <span className="text-gray-200">{user?.username || "Invitado"}</span>
+          👋
         </h1>
       </div>
 
       <div className="flex items-center gap-3">
-        <div className="flex items-center gap-1 cursor-pointer hover:opacity-80 transition-opacity">
-          <p className="text-sm md:text-base font-medium capitalize">
-            {formatDate()}
-          </p>
-        </div>
 
         <button aria-label="Configuración" className="bg-white/10 p-2 rounded-full hover:bg-white/20 transition-colors" onClick={logout}>
           <Settings2/>

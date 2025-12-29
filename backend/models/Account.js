@@ -9,7 +9,7 @@ const accountSchema = new mongoose.Schema({
   },
   name: { type: String, required: true },
   balance: { type: Number, required: true, default: 0 },
-  type: { type: String, enum: ['savings', 'checking', 'credit']},
+  type: { type: String, enum: ['saving', 'debit', 'credit']},
   color: { type: String, default: '#000000' },
 });
 
