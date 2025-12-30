@@ -1,7 +1,7 @@
 import { useState, useContext } from 'react';
 import { AuthContext } from '@/context/AuthContext';
 import { useNavigate } from 'react-router-dom';
-import Bottom from '@/components/Btn';
+import Buttom from '@/components/Btn';
 import Input from '@/components/Input';
 
 const Login = () => {
@@ -73,7 +73,7 @@ const Login = () => {
 					</div>
 
 					<div className='pt-2'>
-						<Bottom type='submit'>Iniciar Sesión</Bottom>
+						<Buttom type='submit'>Iniciar Sesión</Buttom>
 					</div>
 
 					<p className='text-center text-sm'>

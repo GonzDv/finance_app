@@ -4,7 +4,7 @@ import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import ProtectedRoute from './components/ProtectedRoute';
 import NewAccount from './pages/NewAccount';
-
+import NewMovement from './pages/NewMovement';
 function App() {
   return (
     <Router>
@@ -13,6 +13,9 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/new-account" element={<NewAccount />} />
+        <Route path="/new-movement" element={<NewMovement />} />
+        
+        
 
         {/* Ruta Protegida: El Dashboard */}
         <Route 

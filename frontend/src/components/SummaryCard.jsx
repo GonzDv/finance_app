@@ -19,7 +19,7 @@ const SummaryCard = ({ accounts }) => {
 					<p>aqui va chart</p>
 				</div>
 
-			{/* Detalles de Presupuesto (Estilo Notion) */}
+			
 			<div className='space-y-3 pt-4 border-t border-gray-800'>
 				<div className='flex justify-between gap-4 text-sm'>
 					<span className=''>

@@ -1,7 +1,7 @@
 import { useState, useContext } from 'react';
 import { AuthContext } from '@/context/AuthContext';
 import { useNavigate } from 'react-router-dom';
-import Bottom from '@/components/Btn';
+import Buttom from '@/components/Btn';
 import Input from '@/components/input';
 const Register = () => {
 	const [formData, setFormData] = useState({
@@ -102,9 +102,9 @@ const Register = () => {
 						</p>
 					</div>
 					<div>
-						<Bottom
+						<Buttom
 						type='submit'
-						>Registrarse</Bottom>
+						>Registrarse</Buttom>
 					</div>	
 				</form >
 			</div >
