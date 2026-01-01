@@ -10,6 +10,7 @@ const AccountSection = () => {
         const fetchAccounts = async () => {
             try {
                 const { data } = await api.get('/accounts');
+                console.log(data);
                 setAccounts(data);
             } catch (error) {
                 console.error('Error al obtener las cuentas:', error);

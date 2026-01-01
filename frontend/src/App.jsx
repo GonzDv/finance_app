@@ -5,6 +5,7 @@ import Dashboard from './pages/Dashboard';
 import ProtectedRoute from './components/ProtectedRoute';
 import NewAccount from './pages/NewAccount';
 import NewMovement from './pages/NewMovement';
+import NewCategory from './pages/NewCategory';
 function App() {
   return (
     <Router>
@@ -14,6 +15,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/new-account" element={<NewAccount />} />
         <Route path="/new-movement" element={<NewMovement />} />
+        <Route path="/new-category" element={<NewCategory />} />
         
         
 

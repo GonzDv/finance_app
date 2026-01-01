@@ -7,10 +7,12 @@ import api from "@/api/axios";
 
 function NewAccount() {
     const navigate = useNavigate();
+    const [type, setType] = useState("savings");
+    
     const [formData, setFormData] = useState({
         name: "",
         balance: "",
-        type: "savings",
+        type: type,
         color: "#3b82f6", 
     });
 
@@ -18,12 +20,13 @@ function NewAccount() {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
     };
-
+    
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
             await api.post("/accounts", {
                 name: formData.name,
+                type: formData.type,
                 balance: Number(formData.balance),
                 color: formData.color,
             });
@@ -32,7 +35,11 @@ function NewAccount() {
             alert(error.response?.data?.message || "Error al registrar la cuenta");
         }
     };
-
+    const handleTypeChange = (e) => {
+        setType(e);
+        setFormData({ ...formData, type: e });
+        console.log(e);
+    }
     return (
         <div className="min-h-screen bg-[#121212] text-white p-6 md:p-20">
             <form onSubmit={handleSubmit} className="max-w-md mx-auto">
@@ -58,11 +65,11 @@ function NewAccount() {
                         <select
                             name="type"
                             value={formData.type}
-                            onChange={manejarCambio}
+                            onChange={(e) => handleTypeChange(e.target.value)}
                             className="w-full p-3 bg-gray-800 border border-gray-700 rounded-xl focus:ring-1 focus:ring-white outline-none appearance-none"
                         >
                             <option value="savings">Saving</option>
-                            <option value="checking">Debit</option>
+                            <option value="debit">Debit</option>
                             <option value="credit">Credit</option>
                         </select>
                     </div>

@@ -3,6 +3,7 @@ import AccountSection from '@/components/AccountSection';
 import SummaryCard from '@/components/SummaryCard';
 import BudgetList from '@/components/BudgetList';
 import BottomNav from '@/components/BottomNav';
+import NewCategory from '@/pages/NewCategory';
 import FloatingActionButton from '@/components/FloatingActionBtn';
 import { useState } from 'react';
 const Dashboard = () => {
@@ -16,7 +17,7 @@ const Dashboard = () => {
 					setAccounts={setAccounts}
 				/>
 				<SummaryCard accounts={accounts} />
-
+				<NewCategory />
 				<BudgetList />
 			</div>
 			<FloatingActionButton />

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ArrowLeft, Check } from "lucide-react";
-import Card from "@/components/Card";
+import SectionWrapper from "@/components/SectionWrapper";
 import Input from "@/components/Input";
 import button from "@/components/btn";
 import api from "@/api/axios";
@@ -15,9 +15,13 @@ const NewMovement = () => {
         description: "",
         account: "",
         destinationAccount: "",
-        type: "income",
+        type: type,
         date: new Date().toISOString().slice(0, 10),
     });
+    const manejarCambio = (e) => {
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: value });
+    };
     useEffect(() => {
         const fetchAccounts = async () => {
             const { data } = await api.get("/accounts");
@@ -28,20 +32,34 @@ const NewMovement = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const endpoint =
-                formData.type === "transfer"
-                    ? "/transaction/transfer"
-                    : "/transaction/transfer";
+            const isTransfer = formData.type === "transfer";
+            const endpoint = isTransfer ? "/transaction/transfer" : "/transaction/";
             const payload = {
-                ...formData,
                 amount: Number(formData.amount),
+                description: formData.description,
+                type: formData.type,
+                fromAccountId: formData.account,
+                toAccountId: formData.destinationAccount,
+                accountId: formData.account,
+                categoryId: formData.category,
             };
+
             await api.post(endpoint, payload);
             navigate("/dashboard");
         } catch (error) {
-            console.error(error);
+            console.error("Error al crear el movimiento:", error.response?.data || error);
         }
     };
+    const handleTypeChange = (e) => {
+        setType(e);
+        setFormData({ ...formData, type: e });
+        console.log(e);
+    }
+    console.log(type);
+    const typeMovement = ["expense", "income", "transfer"];
+    const isValid = type === "transfer"
+        ? !formData.amount || !formData.account || !formData.destinationAccount || formData.account === formData.destinationAccount
+        : !formData.amount || !formData.account;
     return (
         <div className="min-h-screen bg-[#121212] text-white p-6">
             <header className="flex items-center gap-4 mb-8 max-w-md mx-auto">
@@ -52,13 +70,14 @@ const NewMovement = () => {
             </header>
 
             <form onSubmit={handleSubmit} className="max-w-md mx-auto space-y-6">
-               
+
                 <div className="flex bg-gray-900 p-1 rounded-xl">
-                    {["expense", "income", "transfer"].map((t) => (
+                    {typeMovement.map((t) => (
                         <button
                             key={t}
                             type="button"
-                            onClick={() => setType(t)}
+
+                            onClick={() => handleTypeChange(t)}
                             className={`flex-1 py-2 text-xs font-bold rounded-lg capitalize transition-all ${type === t ? "bg-white text-black" : "text-gray-500"
                                 }`}
                         >
@@ -66,18 +85,22 @@ const NewMovement = () => {
                                 ? "Gasto"
                                 : t === "income"
                                     ? "Ingreso"
-                                    : "Transf."}
+                                    : t === "transfer"
+                                        ? "Transferencia"
+                                        : ""}
                         </button>
+
+
                     ))}
                 </div>
 
-                <Card className="space-y-4">
+                <SectionWrapper className="space-y-4">
                     <Input
                         label="Monto (MXN)"
                         type="number"
+                        name="amount"
                         value={formData.amount}
-                        onChange={(e) =>
-                            setFormData({ ...formData, amount: e.target.value })
+                        onChange={manejarCambio
                         }
                         required
                     />
@@ -87,9 +110,8 @@ const NewMovement = () => {
                         <select
                             className="w-full p-3 bg-gray-800 border border-gray-700 rounded-xl outline-none"
                             value={formData.account}
-                            onChange={(e) =>
-                                setFormData({ ...formData, account: e.target.value })
-                            }
+                            name="account"
+                            onChange={manejarCambio}
                             required
                         >
                             <option value="">Selecciona cuenta</option>
@@ -109,19 +131,15 @@ const NewMovement = () => {
                             <select
                                 className="w-full p-3 bg-gray-800 border border-gray-700 rounded-xl outline-none"
                                 value={formData.destinationAccount}
-                                onChange={(e) =>
-                                    setFormData({
-                                        ...formData,
-                                        destinationAccount: e.target.value,
-                                    })
-                                }
+                                name="destinationAccount"
+                                onChange={manejarCambio}
                                 required
                             >
                                 <option value="">¿A dónde va el dinero?</option>
                                 {accounts.map((acc) => (
                                     <option key={acc._id} value={acc._id}>
                                         {acc.name}
-                                       
+
                                     </option>
                                 ))}
                             </select>
@@ -131,9 +149,8 @@ const NewMovement = () => {
                             label="Categoría"
                             placeholder="Ej: Comida, Renta..."
                             value={formData.category}
-                            onChange={(e) =>
-                                setFormData({ ...formData, category: e.target.value })
-                            }
+                            name="category"
+                            onChange={manejarCambio}
                         />
                     )}
 
@@ -141,19 +158,19 @@ const NewMovement = () => {
                         label="Descripción"
                         placeholder="¿En qué lo gastaste?"
                         value={formData.description}
-                        onChange={(e) =>
-                            setFormData({ ...formData, description: e.target.value })
-                        }
+                        name="description"
+                        onChange={manejarCambio}
                         required
                     />
 
                     <button
                         type="submit"
                         className="w-full bg-white text-black font-bold py-3 rounded-xl mt-4 flex items-center justify-center gap-2"
+                        disabled={isValid}
                     >
                         <Check size={18} /> Confirmar {type}
                     </button>
-                </Card>
+                </SectionWrapper>
             </form>
         </div>
     );
