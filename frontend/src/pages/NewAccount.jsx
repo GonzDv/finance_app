@@ -68,7 +68,7 @@ function NewAccount() {
                             onChange={(e) => handleTypeChange(e.target.value)}
                             className="w-full p-3 bg-gray-800 border border-gray-700 rounded-xl focus:ring-1 focus:ring-white outline-none appearance-none"
                         >
-                            <option value="savings">Saving</option>
+                            <option value="saving">Saving</option>
                             <option value="debit">Debit</option>
                             <option value="credit">Credit</option>
                         </select>

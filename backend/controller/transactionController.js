@@ -4,7 +4,7 @@ const Category = require('../models/Category');
 
 exports.createTransaction = async (req, res) => {
     try {
-        const {name, amount, type, accountId, categoryId} = req.body;
+        const {name, amount, type, accountId, categoryId, description} = req.body;
 
         const transaction = new Transaction({
             name,
@@ -12,7 +12,8 @@ exports.createTransaction = async (req, res) => {
             type,
             account: accountId,
             category: categoryId,
-            user: req.user._id
+            user: req.user._id,
+            description
         })
         await transaction.save();
 

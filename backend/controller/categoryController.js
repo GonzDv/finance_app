@@ -6,7 +6,8 @@ exports.createCategory = async (req, res) => {
         const newCategory = new Category({ 
             name, 
             budget, 
-            spent, icon, 
+            spent: Number(spent) || 0
+            ,icon, 
             user: req.user._id });
         await newCategory.save();
         res.status(201).json(newCategory);
@@ -30,5 +31,24 @@ exports.deleteCategory = async (req, res) => {
         res.json({ message: "Categoría eliminada" });
     } catch (error) {
         res.status(500).json({ message: "Error al borrar" });
+    }
+};
+
+exports.updateCategory = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { name, budget, spent, icon } = req.body;
+        const updatedCategory = await Category.findOneAndUpdate(
+            { _id: id, user: req.user._id },
+            { name, budget, spent, icon },
+            { new: true }
+        );
+
+        if (!updatedCategory) {
+            return res.status(404).json({ message: "Categoría no encontrada" });
+        }
+        res.status(200).json(updatedCategory);
+    } catch (error) {
+        res.status(500).json({ message: "Error al actualizar la categoría", error });
     }
 };

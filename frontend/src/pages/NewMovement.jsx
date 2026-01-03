@@ -10,7 +10,10 @@ const NewMovement = () => {
     const navigate = useNavigate();
     const [type, setType] = useState("income");
     const [accounts, setAccounts] = useState([]);
+    const [categories, setCategories] = useState([]);
     const [formData, setFormData] = useState({
+        name: "",
+        category: "",
         amount: "",
         description: "",
         account: "",
@@ -25,6 +28,8 @@ const NewMovement = () => {
     useEffect(() => {
         const fetchAccounts = async () => {
             const { data } = await api.get("/accounts");
+            const { data: categoriesData } = await api.get("/categories");
+            setCategories(categoriesData);
             setAccounts(data);
         };
         fetchAccounts();
@@ -32,17 +37,22 @@ const NewMovement = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const isTransfer = formData.type === "transfer";
+            const isTransfer = type === "transfer";
             const endpoint = isTransfer ? "/transaction/transfer" : "/transaction/";
-            const payload = {
-                amount: Number(formData.amount),
-                description: formData.description,
-                type: formData.type,
-                fromAccountId: formData.account,
-                toAccountId: formData.destinationAccount,
-                accountId: formData.account,
-                categoryId: formData.category,
-            };
+            const payload = isTransfer ? {
+            amount: Number(formData.amount),
+            description: formData.description,
+            type: "transfer",
+            fromAccountId: formData.account,
+            toAccountId: formData.destinationAccount,
+        } : {
+            name: formData.name,
+            amount: Number(formData.amount),
+            description: formData.description,
+            type: type, 
+            accountId: formData.account,
+            categoryId: formData.category,
+        };
 
             await api.post(endpoint, payload);
             navigate("/dashboard");
@@ -95,6 +105,16 @@ const NewMovement = () => {
                 </div>
 
                 <SectionWrapper className="space-y-4">
+                    {type === "transfer" ?
+                        "" : <Input
+                            label="Nombre Ingreso"
+                            type="text"
+                            name="name"
+                            value={formData.name}
+                            onChange={manejarCambio
+                            }
+                            required
+                        />}
                     <Input
                         label="Monto (MXN)"
                         type="number"
@@ -145,13 +165,26 @@ const NewMovement = () => {
                             </select>
                         </div>
                     ) : (
-                        <Input
-                            label="Categoría"
-                            placeholder="Ej: Comida, Renta..."
-                            value={formData.category}
-                            name="category"
-                            onChange={manejarCambio}
-                        />
+                        <div>
+                            <label className="block text-sm text-gray-400 mb-2">
+                                Categoría
+                            </label>
+                            <select
+                                className="w-full p-3 bg-gray-800 border border-gray-700 rounded-xl outline-none"
+                                value={formData.category}
+                                name="category"
+                                onChange={manejarCambio}
+                                required
+                            >
+                                <option value="">Categoría</option>
+                                {categories.map((cat) => (
+                                    <option key={cat._id} value={cat._id}>
+                                        {cat.name}
+
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
                     )}
 
                     <Input
