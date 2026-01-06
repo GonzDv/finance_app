@@ -18,7 +18,7 @@ const ButtomNav = () => {
                     Hitorial
                 </Link>
                 <div className="relative inline-block group">
-                    <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-4 w-48 bg-zinc-900 border border-white/10 rounded-2xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform">
+                    <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-4 w-48 bg-zinc-900 border border-white/10 rounded-2xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform delay-100">
 
                         <ul className="py-2 text-sm text-gray-300">
                             <li>
@@ -39,8 +39,8 @@ const ButtomNav = () => {
                         </div>
                     </div>
 
-                    <span className="bg-white text-black p-3 rounded-2xl shadow-2xl hover:scale-110 active:scale-95 transition-all flex items-center justify-center border border-gray-200 cursor-pointer">
-                        <Plus size={28} strokeWidth={2.5} />
+                    <span className="bg-white  text-black p-3 rounded-2xl shadow-2xl hover:scale-110 active:scale-95 transition-all flex items-center justify-center border border-gray-200 cursor-pointer">
+                        <Plus size={28} strokeWidth={2.5} className="group-hover:rotate-90 transition-transform delay-100"  />
                     </span>
                 </div>
                 <Link

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import api from '@/api/axios';
-import { CreditCard, Plus, MoreVertical, Edit2, Trash2, ArrowRightLeft } from 'lucide-react';
+import { CreditCard, Plus, MoreVertical, Edit2, Trash2, ArrowRightLeft, Square } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const MovementsList = () => {
@@ -32,10 +32,10 @@ const MovementsList = () => {
     return (
         <section className="w-full max-w-4xl mx-auto mt-6">
             <div className="bg-[#1E1E1E] rounded-3xl border border-gray-800 overflow-hidden shadow-2xl">
-                
+
                 {/* Encabezado de la Tabla */}
                 <div className="grid grid-cols-[1.5fr_1fr_0.2fr] gap-4 px-6 py-4 bg-[#121212]/50 border-b border-gray-800">
-                    <span className="text-[10px] uppercase tracking-[0.2em] text-gray-500 font-bold">Descripción</span>
+                    <span className="text-[10px] uppercase tracking-[0.2em] text-gray-500 font-bold">Descripción movimiento</span>
                     <span className="text-[10px] uppercase tracking-[0.2em] text-gray-500 font-bold text-right">Monto</span>
                     <span className="w-4"></span>
                 </div>
@@ -46,7 +46,7 @@ const MovementsList = () => {
                         movements.map((movement) => (
                             <div
                                 key={movement._id}
-                                className="grid grid-cols-[1.5fr_1fr_0.2fr] gap-4 items-center px-6 py-4 hover:bg-white/[0.02] transition-colors group"
+                                className="grid grid-cols-[1.5fr_1fr_0.2fr] gap-4 items-center px-6 py-4 hover:bg-white/2 transition-colors group"
                             >
                                 <div className="flex items-center gap-3 min-w-0">
                                     <div className={`p-2.5 bg-blue-500/10 rounded-xl ${movement.type === "transfer" ? 'bg-yellow-500/10 text-yellow-500' : movement.account?.color}`}>
@@ -59,7 +59,7 @@ const MovementsList = () => {
 
                                 <div className="text-right">
                                     <span className={`text-sm font-bold ${movement.type == "expense" ? 'text-red-400' : 'text-emerald-400'}`}>
-                                        {movement.type == "expense" ? '-' : '+'} 
+                                        {movement.type == "expense" ? '-' : '+'}
                                         ${Math.abs(movement.amount).toLocaleString('es-MX', { minimumFractionDigits: 2 })}
                                     </span>
                                 </div>
@@ -84,16 +84,16 @@ const MovementsList = () => {
                     )}
                 </div>
 
-                {/* Botón Inferior para Nueva Cuenta/Movimiento */}
                 <Link
                     to="/new-account"
-                    className="flex items-center justify-center gap-2 w-full py-5 text-gray-500 hover:text-white hover:bg-white/[0.02] transition-all border-t border-gray-800 group"
+                    className="flex items-center justify-center gap-2 w-full py-5 text-gray-500 hover:text-white hover:bg-white/2 transition-all border-t border-gray-800 group"
                 >
                     <Plus size={18} strokeWidth={3} className="group-hover:rotate-90 transition-transform" />
-                    <span className="text-[10px] font-bold uppercase tracking-widest">Registrar Nuevo</span>
+                    <span className="text-xs font-bold uppercase tracking-widest">Registrar Nuevo</span>
                 </Link>
             </div>
         </section>
+
     );
 }
 

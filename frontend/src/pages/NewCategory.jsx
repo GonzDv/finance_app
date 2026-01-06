@@ -1,28 +1,17 @@
-import Card from "@/components/Card";
 import SectionWrapper from "@/components/SectionWrapper";
 import Input from "@/components/Input";
 import { Link, useNavigate } from "react-router-dom";
-import { ArrowLeft, Plus, Utensils, Car, ShoppingBag, HeartPulse, Pizza, Shirt } from "lucide-react";
-import { useState } from "react"; // Eliminamos useEffect si no se usa
+import { ArrowLeft, Plus} from "lucide-react";
+import { useState } from "react"; 
 import api from "@/api/axios";
-
-const NewCategory = () => { // Quitamos onSelect si es una página independiente
+import { CATEGORY_ICONS, AVAILABLE_ICONS } from "@/constants/icons";
+const NewCategory = () => { 
     const navigate = useNavigate();
-
-    const icons = [
-        { id: 'Utensils', icon: Utensils, label: 'Útil' },
-        { id: 'Car', icon: Car, label: 'Carro' },
-        { id: 'ShoppingBag', icon: ShoppingBag, label: 'Compras' },
-        { id: 'HeartPulse', icon: HeartPulse, label: 'Salud' },
-        { id: 'Pizza', icon: Pizza, label: 'Comida' },
-        { id: 'Shirt', icon: Shirt, label: 'Ropa' },
-    ];
 
     const [formData, setFormData] = useState({
         name: "",
         budget: "",
-        spent: "",
-        icon: "Utensils", // Valor inicial correcto
+        icon: "Utensils", 
     });
 
     const manejarCambio = (e) => {
@@ -39,10 +28,8 @@ const NewCategory = () => { // Quitamos onSelect si es una página independiente
         e.preventDefault();
         try {
             await api.post("/categories", {
-                name: formData.name,
+                ...formData,
                 budget: Number(formData.budget),
-                spent: Number(formData.spent),
-                icon: formData.icon,
             });
             navigate("/dashboard");
         } catch (error) {
@@ -90,20 +77,26 @@ const NewCategory = () => { // Quitamos onSelect si es una página independiente
                     <div className="space-y-3">
                         <label className="text-sm font-medium text-zinc-400 ml-1">Icono representativo</label>
                         <div className="grid grid-cols-3 gap-3 p-3 bg-zinc-950/50 rounded-2xl border border-white/5">
-                            {icons.map(({ id, icon: Icon, label }) => (
-                                <button
-                                    key={id}
-                                    type="button"
-                                    onClick={() => seleccionarIcono(id)}
-                                    className={`aspect-square rounded-xl transition-all flex flex-col items-center justify-center gap-1.5 border-2 ${formData.icon === id
-                                            ? 'bg-emerald-500 text-white border-emerald-400 shadow-lg shadow-emerald-500/20'
-                                            : 'bg-zinc-800 text-zinc-500 border-transparent hover:bg-zinc-700 hover:text-zinc-300'
+                            {AVAILABLE_ICONS.map(({ id, label, colorClass }) => {
+                                const IconComponent = CATEGORY_ICONS[id];
+                                const isSelected = formData.icon === id;
+
+                                return (
+                                    <button
+                                        key={id}
+                                        type="button"
+                                        onClick={() => seleccionarIcono(id)}
+                                        className={`aspect-square rounded-xl transition-all flex flex-col items-center justify-center gap-1.5 border-2 ${
+                                            isSelected
+                                                ? `${colorClass} bg-white/5` 
+                                                : 'bg-zinc-800 text-zinc-500 border-transparent hover:bg-zinc-700'
                                         }`}
-                                >
-                                    <Icon size={22} strokeWidth={formData.icon === id ? 2.5 : 2} />
-                                    <span className="text-[10px] font-bold uppercase tracking-wider">{label}</span>
-                                </button>
-                            ))}
+                                    >
+                                        <IconComponent size={22} strokeWidth={isSelected ? 2.5 : 2} />
+                                        <span className="text-[10px] font-bold uppercase tracking-wider">{label}</span>
+                                    </button>
+                                );
+                            })}
                         </div>
                     </div>
 

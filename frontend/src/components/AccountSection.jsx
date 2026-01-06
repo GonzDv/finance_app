@@ -2,32 +2,16 @@ import { useState, useEffect } from 'react';
 import api from '@/api/axios';
 import { CreditCard, Plus } from 'lucide-react';
 import { Link } from 'react-router-dom';
-const AccountSection = () => {
-    const [accounts, setAccounts] = useState([]);
+const AccountSection = ( { accounts } ) => {
     const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
-        const fetchAccounts = async () => {
-            try {
-                const { data } = await api.get('/accounts');
-                console.log(data);
-                setAccounts(data);
-            } catch (error) {
-                console.error('Error al obtener las cuentas:', error);
-            } finally {
-                setLoading(false);
-            }
-        }
-        fetchAccounts();
-    }, [])
-
+    const loadAccounts = accounts;
     if (loading) {
         return <div className='text-gray-500 text-sm'>Cargando cuentas...</div>;
     }
     return (
         <section>
             <div className="flex overflow-x-auto gap-4 no-scrollbar pb-2 mi_password_seguro">
-                {accounts.map((account) => (
+                {loadAccounts.map((account) => (
                     <div
                         key={account._id}
                         className="min-w-40  bg-[#1E1E1E] p-2 rounded-xl border border-gray-800 flex flex-col justify-between scrollbar-hide"
