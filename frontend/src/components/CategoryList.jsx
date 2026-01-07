@@ -4,45 +4,29 @@ import SectionWrapper from "./SectionWrapper";
 import api from '@/api/axios';
 import { MoreVertical, Edit2, Trash2, Plus } from "lucide-react";
 import { CATEGORY_ICONS, AVAILABLE_ICONS } from "@/constants/icons";
-const CategoryList = () => {
-  const [categories, setCategories] = useState([]);
+const CategoryList = ({categories}) => {
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const { data } = await api.get('/categories');
-        console.log(data);
-        setCategories(data);
-      } catch (error) {
-        console.error('Error al obtener las cuentas:', error);
-      } finally {
-        setLoading(false);
-      }
-    }
-    fetchCategories();
-  }, [])
-  const handleDelete = async (id) => {
+/*   const handleDelete = async (id) => {
     if (!window.confirm("¿Estás seguro de eliminar esta categoría?")) return;
     try {
       await api.delete(`/categories/${id}`);
-      setCategories(categories.filter(category => category._id !== id));
+      categories.filter(category => category._id !== id)
     } catch (error) {
       console.error('Error al eliminar la categoría:', error);
     }
   };
-  console.log(...categories);
-  if (loading) {
-    return <div className='text-gray-500 text-sm p-6'>Cargando categorías...</div>;
-  }
-
+  
   const handleEdit = (category) => {
-
+    
     console.log('Editar categoría:', category);
-  };
+    };*/
+    if (!loading) {
+      return <div className='text-gray-500 text-sm p-6'>Cargando categorías...</div>;
+    } 
   return (
     <div className="bg-[#1E1E1E] rounded-3xl border border-gray-800 shadow-xl overflow-hidden">
-      {/* Header de la tabla */}
+
       <div className="grid grid-cols-[1.5fr_1fr_1fr_0.2fr] gap-2 px-6 py-4 border-b border-gray-800 bg-[#121212]/50">
         <span className="text-[10px] uppercase tracking-widest text-gray-500 font-bold">Categoría</span>
         <span className="text-[10px] uppercase tracking-widest text-gray-500 font-bold text-center">Gastado</span>
@@ -64,7 +48,7 @@ const CategoryList = () => {
             >
               <div className="flex items-center gap-3 min-w-0">
                 <div className={`p-2 rounded-xl shrink-0 bg-white/5 border ${colorClass.split(' ')[0]}`}>
-                  <IconComponent size={18} />
+                  <IconComponent size={22} className={`${colorClass}`} />
                 </div>
                 <p className="text-sm font-semibold text-white truncate">
                   {category.name}

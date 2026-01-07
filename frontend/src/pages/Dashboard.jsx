@@ -2,47 +2,30 @@ import DashboardHeader from '@/components/DashboardHeader';
 import AccountSection from '@/components/AccountSection';
 import SummaryCard from '@/components/SummaryCard';
 import BudgetList from '@/components/BudgetList';
-import BottomNav from '@/components/BottomNav';
+import ButtomNav from '@/components/ButtomNav';
 import CategoryList from '@/components/CategoryList';
 import MovementsList from '@/components/MovementsList';
 import FloatingActionButton from '@/components/FloatingActionBtn';
 import api from '@/api/axios';
 import { useState, useEffect } from 'react';
+import { useFinance } from '../context/FinanceContext';
 const Dashboard = () => {
-	const [accounts, setAccounts] = useState([]);
-	const [loading, setLoading] = useState(true);
-
-	useEffect( () => {
-		const fetchAccounts = async () => {
-			try {
-				const { data } = await api.get('/accounts');
-				setAccounts(data);
-			} catch (error) {
-				console.error('Error al obtener las cuentas:', error);
-			} finally {
-				setLoading(false);
-			}
-		};
-		fetchAccounts();
-	}, []);
-	if (loading) {
-		return <div className='text-gray-500 text-sm p-6'>Cargando cuentas...</div>;
-	}
+	const { accounts, categories, transactions, loading } = useFinance();
+	if (loading) return <p>Cargando datos...</p>;
+	
 	return (
 		<div className='min-h-screen bg-[#121212] text-white pb-20'>
-			<div className='p-6 space-y-6 max-w-md mx-auto'>
+			<div className='p-6 space-y-6 max-w-2xl mx-auto'>
 				<DashboardHeader />
-				<AccountSection
-					accounts={accounts}
-					setAccounts={setAccounts}
-				/>
+				<AccountSection accounts={accounts}/>
 				<SummaryCard accounts={accounts} />
-				<CategoryList />
-				<MovementsList />
+
+				<CategoryList categories={categories} />
+				<MovementsList transactions={transactions} />
 				<BudgetList />
 			</div>
-			<FloatingActionButton />
-			<BottomNav />
+			{/* <FloatingActionButton /> */}
+			<ButtomNav />
 		</div>
 	);
 };

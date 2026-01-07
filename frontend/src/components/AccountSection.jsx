@@ -4,14 +4,13 @@ import { CreditCard, Plus } from 'lucide-react';
 import { Link } from 'react-router-dom';
 const AccountSection = ( { accounts } ) => {
     const [loading, setLoading] = useState(true);
-    const loadAccounts = accounts;
-    if (loading) {
+    if (!loading) {
         return <div className='text-gray-500 text-sm'>Cargando cuentas...</div>;
     }
     return (
         <section>
             <div className="flex overflow-x-auto gap-4 no-scrollbar pb-2 mi_password_seguro">
-                {loadAccounts.map((account) => (
+                {accounts.map((account) => (
                     <div
                         key={account._id}
                         className="min-w-40  bg-[#1E1E1E] p-2 rounded-xl border border-gray-800 flex flex-col justify-between scrollbar-hide"

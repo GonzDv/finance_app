@@ -102,7 +102,7 @@ const NewCategory = () => {
 
                     <button
                         type="submit"
-                        className="w-full bg-white text-black font-bold py-4 rounded-2xl mt-4 hover:bg-zinc-200 active:scale-95 transition-all flex items-center justify-center gap-2 shadow-xl"
+                        className="w-full bg-white text-black font-bold py-4 rounded-2xl mt-4 hover:bg-zinc-200 active:scale-95 transition-all flex items-center justify-center gap-2 shadow-xl border-b-8 border-b-[#60609b]"
                     >
                         <Plus size={20} strokeWidth={3} />
                         Crear Categoría

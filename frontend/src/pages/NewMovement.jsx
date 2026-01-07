@@ -88,7 +88,7 @@ const NewMovement = () => {
                             type="button"
 
                             onClick={() => handleTypeChange(t)}
-                            className={`flex-1 py-2 text-xs font-bold rounded-lg capitalize transition-all ${type === t ? "bg-white text-black" : "text-gray-500"
+                            className={`flex-1 py-2 text-xs font-bold rounded-lg capitalize transition-all focus:border-b-6 focus:border-b-[#60609b] border-b-6 border-b-gray-900  ${type === t ? "bg-white text-black" : "text-gray-500"
                                 }`}
                         >
                             {t === "expense"
@@ -198,7 +198,7 @@ const NewMovement = () => {
 
                     <button
                         type="submit"
-                        className="w-full bg-white text-black font-bold py-3 rounded-xl mt-4 flex items-center justify-center gap-2"
+                        className="w-full bg-white text-black font-bold py-3 rounded-xl mt-4 flex items-center justify-center gap-2 hover:border-b-6 hover:border-b-[#60609b] border-b-6 border-b-gray-900 pointer"
                         disabled={isValid}
                     >
                         <Check size={18} /> Confirmar {type}

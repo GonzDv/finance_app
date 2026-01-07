@@ -18,7 +18,7 @@ const SummaryCard = ({ accounts }) => {
 					</p>
 				</div>
 			</div>
-			<div className="w-full bg-[#1E1E1E] p-8 rounded-2xl border border-gray-800 shadow-xl">
+			<div className="w-full bg-[#1E1E1E] p-8 rounded-2xl border border-gray-800 shadow-xl ">
 				<div className="flex justify-between items-start mb-4">
 					<div>
 						<p className="text-gray-400 text-m font-medium">Disponible Total:</p>
