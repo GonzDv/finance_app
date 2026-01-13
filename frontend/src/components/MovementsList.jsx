@@ -1,8 +1,7 @@
 import { Plus } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import MovementItem from "./MovementItem";
-
-const MovementsList = ({ transactions, loading, onEdit, onDelete }) => {
+const MovementsList = ({ transactions, loading, onEdit }) => {
 
     if (loading) {
         return (
@@ -33,7 +32,7 @@ const MovementsList = ({ transactions, loading, onEdit, onDelete }) => {
                                 key={movement._id}
                                 movement={movement}
                                 onEdit={onEdit}
-                                onDelete={onDelete}
+
                             />
                         ))
                     ) : (

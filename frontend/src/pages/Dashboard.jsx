@@ -10,7 +10,8 @@ import api from '@/api/axios';
 import { useState, useEffect } from 'react';
 import { useFinance } from '../context/FinanceContext';
 const Dashboard = () => {
-	const { accounts, categories, transactions, loading } = useFinance();
+	
+	const { accounts, categories, transactions, loading, deleteTransaction, deleteCategory } = useFinance();
 	if (loading) return <p>Cargando datos...</p>;
 	
 	return (
@@ -20,11 +21,11 @@ const Dashboard = () => {
 				<AccountSection accounts={accounts}/>
 				<SummaryCard accounts={accounts} />
 
-				<CategoryList categories={categories} />
-				<MovementsList transactions={transactions} />
+				<CategoryList categories={categories} deleteCategory={deleteCategory} />
+				<MovementsList transactions={transactions} deleteTransaction={deleteTransaction} />
 				<BudgetList />
 			</div>
-			{/* <FloatingActionButton /> */}
+			
 			<ButtomNav />
 		</div>
 	);

@@ -53,8 +53,6 @@ const History = () => {
     return (
         <div className="min-h-screen bg-[#09090b] text-white p-6 md:p-12 lg:p-20">
             <div className="max-w-2xl mx-auto">
-
-                {/* Header */}
                 <header className="flex items-center justify-between mb-8">
                     <div className="flex items-center gap-4">
                         <Link to="/dashboard" className="p-2 hover:bg-zinc-800 rounded-full transition-colors border border-white/5">
@@ -96,7 +94,6 @@ const History = () => {
                     ))}
                 </div>
 
-                {/* Listado agrupado por fecha */}
                 <div className="space-y-8">
                     {groupedTransactions.length > 0 ? (
                         groupedTransactions.map((group) => (
@@ -105,13 +102,12 @@ const History = () => {
                                     {group.date}
                                 </h2>
 
-                                {/* Contenedor de la lista - Mismo estilo que en el Dashboard */}
                                 <div className="bg-zinc-900/30 rounded-3xl border border-white/5 divide-y divide-white/5 overflow-hidden">
                                     {group.movements.map((movement) => (
                                         <MovementItem
                                             key={movement._id}
                                             movement={movement}
-                                            // Aquí puedes pasar tus funciones reales de edición/borrado
+                                            
                                             onEdit={(m) => console.log("Editando", m)}
                                             onDelete={(id) => console.log("Borrando", id)}
                                         />

@@ -23,18 +23,17 @@ function App() {
           <Route path="/new-movement" element={<NewMovement />} />
           <Route path="/new-category" element={<NewCategory />} />
           <Route path="/history" element={<History />} />
-          <Route path="/dashboard" element={<Dashboard />} />
           
 
           {/* Ruta Protegida: El Dashboard */}
-          {/* <Route
+          <Route
             path="/dashboard"
             element={
               <ProtectedRoute>
                 <Dashboard />
               </ProtectedRoute>
             }
-          /> */}
+          /> 
 
           {/* Redirección por defecto: Si entra a "/" va al dashboard */}
           <Route path="*" element={<Navigate to="/dashboard" />} />

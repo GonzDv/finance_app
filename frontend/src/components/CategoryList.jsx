@@ -4,28 +4,22 @@ import SectionWrapper from "./SectionWrapper";
 import api from '@/api/axios';
 import { MoreVertical, Edit2, Trash2, Plus } from "lucide-react";
 import { CATEGORY_ICONS, AVAILABLE_ICONS } from "@/constants/icons";
+import { useFinance } from "@/context/FinanceContext";
+import Modal from "./Models/ModelConfirmation";
+
+
 const CategoryList = ({categories}) => {
   const [loading, setLoading] = useState(true);
-
-/*   const handleDelete = async (id) => {
-    if (!window.confirm("¿Estás seguro de eliminar esta categoría?")) return;
-    try {
-      await api.delete(`/categories/${id}`);
-      categories.filter(category => category._id !== id)
-    } catch (error) {
-      console.error('Error al eliminar la categoría:', error);
-    }
-  };
-  
+  const [modalAbierto, setModalAbierto] = useState(false);
   const handleEdit = (category) => {
     
     console.log('Editar categoría:', category);
-    };*/
+    };
     if (!loading) {
       return <div className='text-gray-500 text-sm p-6'>Cargando categorías...</div>;
     } 
   return (
-    <div className="bg-[#1E1E1E] rounded-3xl border border-gray-800 shadow-xl overflow-hidden">
+    <div className="bg-[#1E1E1E] rounded-3xl border border-gray-800 shadow-xl">
 
       <div className="grid grid-cols-[1.5fr_1fr_1fr_0.2fr] gap-2 px-6 py-4 border-b border-gray-800 bg-[#121212]/50">
         <span className="text-[10px] uppercase tracking-widest text-gray-500 font-bold">Categoría</span>
@@ -76,11 +70,21 @@ const CategoryList = ({categories}) => {
                     <Edit2 size={12} /> Editar
                   </button>
                   <button
-                    onClick={() => handleDelete(category._id)}
+                    onClick={() => setModalAbierto(true)}
                     className="w-full flex items-center gap-2 px-3 py-2.5 text-xs text-red-400 hover:bg-red-500/10 transition-colors border-t border-white/5"
                   >
                     <Trash2 size={12} /> Eliminar
                   </button>
+                  <Modal
+                    categoryId={category._id}
+                    isOpen={modalAbierto}
+                    onClose={() => setModalAbierto(false)}
+                    title="Confirmar Eliminación"
+                  >
+                    <p className="text-sm text-gray-300">¿Estás seguro de que deseas eliminar la categoría <span className="font-semibold text-white">{category.name}</span>? Esta acción no se puede deshacer.</p>
+
+                    
+                  </Modal>
                 </div>
               </div>
             </div>

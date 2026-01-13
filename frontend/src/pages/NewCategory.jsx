@@ -5,9 +5,10 @@ import { ArrowLeft, Plus} from "lucide-react";
 import { useState } from "react"; 
 import api from "@/api/axios";
 import { CATEGORY_ICONS, AVAILABLE_ICONS } from "@/constants/icons";
+import { useFinance } from "../context/FinanceContext";
 const NewCategory = () => { 
     const navigate = useNavigate();
-
+    const { refreshData } = useFinance();
     const [formData, setFormData] = useState({
         name: "",
         budget: "",
@@ -31,9 +32,11 @@ const NewCategory = () => {
                 ...formData,
                 budget: Number(formData.budget),
             });
+            await refreshData();
             navigate("/dashboard");
         } catch (error) {
-            alert(error.response?.data?.message || "Error al registrar la categoría");
+            console.log("el error es",error);
+            alert("Error al registrar la categoría", error.response?.data?.message || error.message );
         }
     };
     const handleEdit = (e) => {

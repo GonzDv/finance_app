@@ -4,11 +4,11 @@ import { ArrowLeft, Plus } from "lucide-react";
 import SectionWrapper from "@/components/SectionWrapper"; 
 import Input from "@/components/Input";
 import api from "@/api/axios";
-
+import { useFinance } from "@/context/FinanceContext";
 function NewAccount() {
     const navigate = useNavigate();
     const [type, setType] = useState("savings");
-    
+    const { refreshData } = useFinance();
     const [formData, setFormData] = useState({
         name: "",
         balance: "",
@@ -25,11 +25,10 @@ function NewAccount() {
         e.preventDefault();
         try {
             await api.post("/accounts", {
-                name: formData.name,
-                type: formData.type,
+                ...formData,
                 balance: Number(formData.balance),
-                color: formData.color,
             });
+            await refreshData();
             navigate("/dashboard");
         } catch (error) {
             alert(error.response?.data?.message || "Error al registrar la cuenta");

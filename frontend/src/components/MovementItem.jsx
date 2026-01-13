@@ -1,7 +1,14 @@
 import { MoreVertical, Edit2, Trash2, ArrowRightLeft } from 'lucide-react';
 import { CATEGORY_ICONS, AVAILABLE_ICONS } from "@/constants/icons";
+import { useFinance } from '@/context/FinanceContext';
+const MovementItem = ({ movement, onEdit }) => {
+    const { deleteTransaction } = useFinance();
 
-const MovementItem = ({ movement, onEdit, onDelete }) => {
+    const ejecutarEliminacion = () => {
+        if (window.confirm("¿Seguro que quieres borrar este movimiento?")) {
+            deleteTransaction(movement._id);
+        }
+    };
     const category = movement.category || {};
     const IconComponent = CATEGORY_ICONS[category.icon] || CATEGORY_ICONS['Utensils'];
     const iconConfig = AVAILABLE_ICONS.find(i => i.id === category.icon);
@@ -56,7 +63,7 @@ const MovementItem = ({ movement, onEdit, onDelete }) => {
                         <Edit2 size={12} /> Editar
                     </button>
                     <button
-                        onClick={() => onDelete?.(movement._id)}
+                        onClick={ejecutarEliminacion}
                         className="w-full flex items-center gap-2 px-4 py-3 text-xs text-red-400 hover:bg-red-500/10 transition-colors border-t border-white/5"
                     >
                         <Trash2 size={12} /> Eliminar

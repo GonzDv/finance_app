@@ -5,12 +5,12 @@ import SectionWrapper from "@/components/SectionWrapper";
 import Input from "@/components/Input";
 import button from "@/components/btn";
 import api from "@/api/axios";
-
+import { useFinance } from "../context/FinanceContext";
 const NewMovement = () => {
+    const { refreshData, accounts, categories } = useFinance();
     const navigate = useNavigate();
     const [type, setType] = useState("income");
-    const [accounts, setAccounts] = useState([]);
-    const [categories, setCategories] = useState([]);
+
     const [formData, setFormData] = useState({
         name: "",
         category: "",
@@ -25,15 +25,6 @@ const NewMovement = () => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
     };
-    useEffect(() => {
-        const fetchAccounts = async () => {
-            const { data } = await api.get("/accounts");
-            const { data: categoriesData } = await api.get("/categories");
-            setCategories(categoriesData);
-            setAccounts(data);
-        };
-        fetchAccounts();
-    }, []);
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -55,6 +46,7 @@ const NewMovement = () => {
         };
 
             await api.post(endpoint, payload);
+            await refreshData();
             navigate("/dashboard");
         } catch (error) {
             console.error("Error al crear el movimiento:", error.response?.data || error);

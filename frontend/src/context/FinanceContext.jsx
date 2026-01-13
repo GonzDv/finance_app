@@ -1,4 +1,4 @@
-import {createContext, useState, useEffect, useContext} from 'react';
+import { createContext, useState, useEffect, useContext } from 'react';
 import api from '@/api/axios';
 
 const FinanceContext = createContext();
@@ -32,23 +32,37 @@ export const FinanceProvider = ({ children }) => {
         fetchData();
     }, [])
 
+
     const deleteCategory = async (categoryId) => {
         try {
             await api.delete(`/categories/${categoryId}`);
-            setCategories(prevCategories => prevCategories.filter(cat => cat.id !== categoryId));
+            setCategories(prevCategories => prevCategories.filter(category => category._id !== categoryId));
+            await fetchData();
         } catch (error) {
             console.error('Error al eliminar la categoría:', error);
+            alert('No se pudo eliminar la categoría. Por favor, inténtalo de nuevo.');
+        }
+    }
+    const deleteTransaction = async (transactionId) => {
+        try {
+            await api.delete(`/transaction/${transactionId}`);
+            setTransactions(prevTransactions => prevTransactions.filter(tx => tx.id !== transactionId));
+            await fetchData();
+        } catch (error) {
+            console.error('Error al eliminar la transacción:', error);
+            alert('No se pudo eliminar el movimiento. Por favor, inténtalo de nuevo.');
         }
     }
     return (
-        <FinanceContext.Provider value={{ 
-            accounts, 
-            categories, 
-            transactions, 
-            loading, 
+        <FinanceContext.Provider value={{
+            accounts,
+            categories,
+            transactions,
+            loading,
             deleteCategory,
+            deleteTransaction,
             refreshData: fetchData
-            }}> 
+        }}>
             {children}
         </FinanceContext.Provider>
     )
