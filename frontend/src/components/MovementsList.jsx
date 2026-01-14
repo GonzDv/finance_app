@@ -1,8 +1,10 @@
 import { Plus } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import MovementItem from "./MovementItem";
+import Modal from './Models/ModelConfirmation';
+import { useState } from 'react';
 const MovementsList = ({ transactions, loading, onEdit }) => {
-
+    const [movementToDelete, setMovementToDelete] = useState(null);
     if (loading) {
         return (
             <div className="w-full flex justify-center p-10">
@@ -32,7 +34,7 @@ const MovementsList = ({ transactions, loading, onEdit }) => {
                                 key={movement._id}
                                 movement={movement}
                                 onEdit={onEdit}
-
+                                onDeleteClick={(mov) => setMovementToDelete(mov)}
                             />
                         ))
                     ) : (
@@ -40,6 +42,19 @@ const MovementsList = ({ transactions, loading, onEdit }) => {
                             No hay movimientos registrados.
                         </div>
                     )}
+                    <Modal
+                        isOpen={!!movementToDelete}
+                        onClose={() => setMovementToDelete(null)}
+                        title="Confirmar Eliminación"
+                        Id={movementToDelete?._id}
+                        Name={movementToDelete?.description}
+                    >
+                        <p className="text-sm text-gray-300">
+                            ¿Estás seguro de que deseas eliminar el movimiento 
+                            <span className="font-semibold text-white"> {movementToDelete?.description}</span>?
+                        </p>
+                    </Modal>
+
                 </div>
                 <Link
                     to="/new-movement"

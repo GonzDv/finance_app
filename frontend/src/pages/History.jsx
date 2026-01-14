@@ -2,13 +2,13 @@ import { ArrowLeft, Search, Filter } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useMemo, useState } from 'react';
 import { useFinance } from '@/context/FinanceContext';
-import MovementItem from "@/components/MovementItem"; // Importamos el componente reutilizable
-
+import MovementItem from "@/components/MovementItem"; 
+import Modal from "../components/Models/ModelConfirmation";
 const History = () => {
     const { categories, transactions, loading } = useFinance();
     const [searchTerm, setSearchTerm] = useState("");
     const [selectedCategory, setSelectedCategory] = useState("all");
-
+    const [movementToDelete, setMovementToDelete] = useState(null);
     const handleCategorySelect = (categoryId) => {
         setSelectedCategory(categoryId);
         if (categoryId === "all") {
@@ -115,11 +115,24 @@ const History = () => {
                                 </div>
                             </div>
                         ))
+                        
                     ) : (
                         <div className="text-center py-20">
                             <p className="text-zinc-500">No se encontraron movimientos.</p>
                         </div>
                     )}
+                    <Modal
+                        isOpen={!!movementToDelete}
+                        onClose={() => setMovementToDelete(null)}
+                        title="Confirmar Eliminación"
+                        Id={movementToDelete?._id}
+                        Name={movementToDelete?.description}
+                    >
+                        <p className="text-sm text-gray-300">
+                            ¿Estás seguro de que deseas eliminar el movimiento 
+                            <span className="font-semibold text-white"> {movementToDelete?.description}</span>?
+                        </p>
+                    </Modal>
                 </div>
             </div>
         </div>

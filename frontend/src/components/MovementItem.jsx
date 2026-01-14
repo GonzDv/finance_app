@@ -1,14 +1,9 @@
 import { MoreVertical, Edit2, Trash2, ArrowRightLeft } from 'lucide-react';
 import { CATEGORY_ICONS, AVAILABLE_ICONS } from "@/constants/icons";
 import { useFinance } from '@/context/FinanceContext';
-const MovementItem = ({ movement, onEdit }) => {
+const MovementItem = ({ movement, onEdit, onDeleteClick }) => {
     const { deleteTransaction } = useFinance();
 
-    const ejecutarEliminacion = () => {
-        if (window.confirm("¿Seguro que quieres borrar este movimiento?")) {
-            deleteTransaction(movement._id);
-        }
-    };
     const category = movement.category || {};
     const IconComponent = CATEGORY_ICONS[category.icon] || CATEGORY_ICONS['Utensils'];
     const iconConfig = AVAILABLE_ICONS.find(i => i.id === category.icon);
@@ -25,8 +20,8 @@ const MovementItem = ({ movement, onEdit }) => {
         <div className="grid grid-cols-[1.5fr_1fr_0.2fr] gap-4 items-center px-6 py-4 hover:bg-white/2 transition-colors group">
             <div className="flex items-center gap-3 min-w-0">
                 <div className={`p-2.5 rounded-xl shrink-0 flex items-center justify-center ${movement.type === "transfer"
-                        ? `bg-zinc-800 border border${colorClass.split(' ')[0]} text-yellow-500`
-                        : `bg-white/5 border ${colorClass.split(' ')[0]}`
+                    ? `bg-zinc-800 border border${colorClass.split(' ')[0]} text-yellow-500`
+                    : `bg-white/5 border ${colorClass.split(' ')[0]}`
                     }`}>
                     {movement.type === "transfer"
                         ? <ArrowRightLeft size={22} />
@@ -63,7 +58,7 @@ const MovementItem = ({ movement, onEdit }) => {
                         <Edit2 size={12} /> Editar
                     </button>
                     <button
-                        onClick={ejecutarEliminacion}
+                        onClick={() => onDeleteClick?.(movement)}
                         className="w-full flex items-center gap-2 px-4 py-3 text-xs text-red-400 hover:bg-red-500/10 transition-colors border-t border-white/5"
                     >
                         <Trash2 size={12} /> Eliminar
