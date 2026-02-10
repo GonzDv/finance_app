@@ -1,6 +1,6 @@
 import { AuthContext } from "@/context/AuthContext";
 import { useContext } from "react";
-import { UserCircle2, Settings2 } from "lucide-react";
+import { LogOut, Settings2 } from "lucide-react";
 const DashboardHeader = () => {
   const { user, logout } = useContext(AuthContext);
   const formatDate = () => {
@@ -21,7 +21,7 @@ const DashboardHeader = () => {
       <div className="flex items-center gap-3">
 
         <button aria-label="Configuración" className="bg-white/10 p-2 rounded-full hover:bg-white/20 transition-colors" onClick={logout}>
-          <Settings2/>
+          <LogOut/>
         </button>
       </div>
     </header>

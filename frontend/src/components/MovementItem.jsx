@@ -1,8 +1,8 @@
 import { MoreVertical, Edit2, Trash2, ArrowRightLeft } from 'lucide-react';
 import { CATEGORY_ICONS, AVAILABLE_ICONS } from "@/constants/icons";
-import { useFinance } from '@/context/FinanceContext';
-const MovementItem = ({ movement, onEdit, onDeleteClick }) => {
-    const { deleteTransaction } = useFinance();
+
+const MovementItem = ({ movement, onEdit, onDeleteClick, account}) => {
+
 
     const category = movement.category || {};
     const IconComponent = CATEGORY_ICONS[category.icon] || CATEGORY_ICONS['Utensils'];
@@ -29,7 +29,8 @@ const MovementItem = ({ movement, onEdit, onDeleteClick }) => {
                     }
                 </div>
                 <div className="min-w-0">
-                    <p className="text-sm font-semibold text-white truncate">
+                    <span className='text-[15px] text-zinc-400'>{movement.account?.name}</span>
+                    <p className="text-sm font-semibold text-white truncate tracking-wider sm:text-2xl">
                         {movement.description}
                     </p>
                     <p className="text-[10px] text-zinc-500 uppercase font-bold tracking-wider">

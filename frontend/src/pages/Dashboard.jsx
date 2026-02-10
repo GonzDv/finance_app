@@ -15,7 +15,7 @@ const Dashboard = () => {
 	if (loading) return <p>Cargando datos...</p>;
 	
 	return (
-		<div className='min-h-screen bg-[#121212] text-white pb-20'>
+		<div className=''>
 			<div className='p-6 space-y-6 max-w-2xl mx-auto'>
 				<DashboardHeader />
 				<AccountSection accounts={accounts}/>

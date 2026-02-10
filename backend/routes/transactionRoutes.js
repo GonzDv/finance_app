@@ -2,8 +2,10 @@ const express = require('express');
 const router = express.Router();
 const transactionController = require('../controller/transactionController');
 const {protect} = require('../middleware/authMiddleware');
-
+console.log("--- CARGANDO RUTAS DE TRANSACCIONES ---");
 router.post('/', protect, transactionController.createTransaction);
 router.post('/transfer', protect, transactionController.createTransfer);
 router.get('/', protect, transactionController.getTransactions);
+router.put('/:id', protect, transactionController.updateTransaction);
+router.delete('/:id', protect, transactionController.deleteTransaction);
 module.exports = router;

@@ -4,8 +4,8 @@ import {
     House,
     History,
     SlidersHorizontal,
-    ChartColumnIncreasing,
     Plus,
+    Wallet
 } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 const ButtomNav = () => {
@@ -89,10 +89,10 @@ const ButtomNav = () => {
                 </div>
                 <Link
                     className="flex flex-col justify-center items-center "
-                    to="/Analistics"
+                    to="/accounts"
                 >
-                    <ChartColumnIncreasing />
-                    Analisis
+                    <Wallet />
+                    Cuentas
                 </Link>
 
                 <Link

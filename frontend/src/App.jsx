@@ -9,7 +9,8 @@ import NewCategory from './pages/NewCategory';
 import History from './pages/History';
 import MainLayout from './layouts/MainLayout';
 import FinanceProvider from './context/FinanceContext';
-
+import Account from './pages/Accounts';
+import Settings from './pages/Settings';
 function App() {
   return (
     <Router >
@@ -23,6 +24,10 @@ function App() {
           <Route path="/new-movement" element={<NewMovement />} />
           <Route path="/new-category" element={<NewCategory />} />
           <Route path="/history" element={<History />} />
+          <Route path="/accounts" element={<Account />} />
+          <Route path="/settings" element={<Settings />} />
+          
+          
           
 
           {/* Ruta Protegida: El Dashboard */}

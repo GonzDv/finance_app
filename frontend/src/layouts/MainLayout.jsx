@@ -5,7 +5,7 @@ export const MainLayout = ({ children }) => {
   const location = useLocation();
 
 
-  const rutasConNav = ['/', '/history', '/analysis', '/settings'];
+  const rutasConNav = ['/', '/history', '/accounts', '/settings'];
   
 
   const mostrarNav = rutasConNav.includes(location.pathname);

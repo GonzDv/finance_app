@@ -7,6 +7,6 @@ import "react-beautiful-color/dist/react-beautiful-color.css";
 createRoot(document.getElementById('root')).render(
   
   <AuthProvider>
-    <App />
+    <App className="min-h-screen bg-[#121212] text-white pb-20" />
   </AuthProvider>
 )
